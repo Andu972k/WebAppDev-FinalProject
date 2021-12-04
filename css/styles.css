@@ -1,0 +1,14 @@
+
+:root {
+    --colorTextPrimary: black;
+    --colorTextSecondary: floralwhite;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.hidden {
+    display: none;
+}
