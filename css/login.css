@@ -1,0 +1,67 @@
+
+:root {
+    --colorTextPrimary: black;
+    --colorTextSecondary: floralwhite;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    font-size: 100%;
+}
+
+header {
+    text-align: center;
+}
+
+.hidden {
+    display: none;
+}
+
+form div {
+    display: flex;
+    flex-direction: column;
+}
+
+footer {
+    text-align: center;
+}
+
+
+@media (min-width: 480px) {
+    body {
+        display: grid;
+        grid-template-areas: 
+            "header header header"
+            ". main .";
+    }
+
+    body > header {
+        grid-area: header;
+    }
+
+    body > main {
+        grid-area: main;
+        margin-top: 5rem;
+    }
+
+    body > footer {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+    }
+
+
+}
+
+@media (min-width: 768px) {
+    body {
+        grid-template-columns: auto 45rem auto;
+    }
+
+
+}
