@@ -40,8 +40,9 @@ else {
 
             switch ($verb) {
                 case 'GET':
-                    $urlPieces[2] = $_GET['searchText'];
-                    echo json_encode($urlPieces);
+                    if (isset($_GET['search-text'])) {
+                        echo $artist->search($_GET['search-text']);
+                    }
                     break;
                 case 'POST':
 
