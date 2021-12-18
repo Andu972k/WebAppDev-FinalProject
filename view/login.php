@@ -8,20 +8,41 @@
     if (isset($_POST['logout'])) {
         session_destroy();
     }
-    else if (isset($_SESSION['userID'])) {
+    else if (isset($_SESSION['customerID'])) {
         header('Location: ../index.php');
     }
-    else if (isset($_POST['username'])) {
+    else if (isset($_SESSION['userRole'])) {
+        header('Location: ../admin/adminHub.php');
+    }
+    else if (isset($_POST['email'])) {
         $customerValidation = true;
 
-        $username = $_POST['username'];
+        $email = $_POST['email'];
         $password = $_POST['password'];
 
-        if (strtolower($username) === 'admin') {
+        if (strtolower($email) === 'admin') {
+            require_once('../src/admin.php');
+            $admin = new admin();
+            $validAdmin = $admin->validate($password);
+            if ($validAdmin) {
+                session_start();
 
+                $_SESSION['userRole'] = $admin->userName;
+
+                header('Location: ../admin/adminHub.php');
+            }
         }
         else {
-            
+            require_once('../src/customer.php');
+            $customer = new Customer();
+            $validCustomer = $customer->validate($email, $password);
+            if ($validCustomer) {
+                session_start();
+
+                $_SESSION['customerID'] = $customer->customerID;
+
+                header('Location: ../index.php');
+            }
         }
     }
 
@@ -35,7 +56,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <script src="https://code.jquery.com/jquery-3.6.0.js" defer></script>
-    <script src="js/script.js" defer></script>
+    <script src="../js/script.js" defer></script>
     <link rel="stylesheet" href="../css/login.css">
 </head>
 <body>
@@ -43,26 +64,41 @@
         <h1>Music shop</h1>
     </header>
 
+    <?php
+            if ($customerValidation && (!$validCustomer || !$validAdmin)) {
+        ?>
+        <div >
+            Invalid email or password.
+        </div>
+        <?php            
+            }
+        ?>
+
     <main>
         <section>
             <div>
-                <form id="signinForm" method="POST">
+                <form id="signinForm" action="login.php" method="POST">
                     <fieldset>
                         <legend>Login</legend>
                         <div>
-                            <label for="userName">Username</label>
-                            <input type="text" name="userName">
+                            <label for="email">Email</label>
+                            <input type="text" name="email" required>
                         </div>
                         <div>
                             <label for="password">Password</label>
-                            <input type="password" name="password">
+                            <input type="password" name="password" required>
                         </div>
-                        <input type="submit" value="Login">
+                        <input type="submit" id="btnLogin" value="Login">
                     </fieldset>
                 </form>
             </div>
         </section>
     </main>
+
+    <?php
+    unset($admin);
+
+    ?>
 
     <footer>
         &copy; Anders Genderskov Binder

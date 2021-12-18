@@ -1,7 +1,7 @@
 <?php
     //Local DB
 
-    $server = 'localhost';
+    $server = 'localhost:8889';
     $dbName = 'chinook_abridged';
     $user = 'root';
     $pwd = '';

@@ -16,7 +16,7 @@
                 SELECT * FROM admin;
             SQL;
             $stmt = $this->pdo->prepare($query);
-            $stmt->execute([$password]);
+            $stmt->execute();
             if ($stmt->rowCount() === 0) {
                 return false;
             }

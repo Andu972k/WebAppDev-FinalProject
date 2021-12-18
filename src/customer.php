@@ -88,6 +88,9 @@
                 $stmt->execute([$firstName, $lastName, $company, $address, $city, $state, $country, $postalCode, $phone, $fax, $email]);
             }
 
+            $this->disconnect();
+
+            return true;
         }
 
 
