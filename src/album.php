@@ -13,7 +13,7 @@ class Album extends DB {
 
         $query = <<<'SQL'
             SELECT * FROM album
-            ORDER BY ArtistId, Title
+            ORDER BY ArtistId ASC, Title ASC
         SQL;
         
 
@@ -24,7 +24,7 @@ class Album extends DB {
 
         $this->disconnect();
 
-        return json_encode($results);
+        return json_encode(['Response' => $results]);
     }
 
     /**
@@ -46,7 +46,7 @@ class Album extends DB {
 
         $this->disconnect();
 
-        return json_encode($result);
+        return json_encode(['Response' => $result]);
     }
 
     /**
@@ -59,7 +59,7 @@ class Album extends DB {
         $query = <<<'SQL'
             SELECT * FROM album
             WHERE Title like ?
-            ORDER BY AlbumId, Title
+            ORDER BY ArtistId ASC, Title ASC
         SQL;
 
         $stmt = $this->pdo->prepare($query);
@@ -69,7 +69,7 @@ class Album extends DB {
 
         $this->disconnect();
 
-        return json_encode($results);
+        return json_encode(['Response' => $results]);
     }
 
     /**
@@ -90,7 +90,7 @@ class Album extends DB {
         $stmt->execute([$artistId]);
 
         if (!$stmt->fetch()['Total'] > 0) {
-            return json_encode(-1);
+            return json_encode(['Response' => -1]);
         }
 
         //Check if album exists
@@ -103,7 +103,7 @@ class Album extends DB {
         $stmt->execute([$title]);
 
         if ($stmt->fetch()['Total'] > 0) {
-            return json_encode(-1);
+            return json_encode(['Response' => -1]);
         }
 
         //Insert album
@@ -117,7 +117,7 @@ class Album extends DB {
         $newId = $this->pdo->lastInsertId();
         $this->disconnect();
 
-        return json_encode($newId);
+        return json_encode(['Response' => $newId]);
     }
 
     /**
@@ -138,7 +138,7 @@ class Album extends DB {
         $stmt->execute([$newArtistId]);
 
         if (!$stmt->fetch()['Total'] > 0) {
-            return json_encode(false);
+            return json_encode(['Response' => false]);
         }
 
         //Check if album exists
@@ -151,7 +151,7 @@ class Album extends DB {
         $stmt->execute([$newTitle]);
 
         if ($stmt->fetch()['Total'] > 0) {
-            return json_encode(false);
+            return json_encode(['Response' => false]);
         }
 
         //Update album
@@ -166,12 +166,12 @@ class Album extends DB {
         $stmt->execute([$newTitle, $newArtistId, $id]);
 
         if ($stmt->rowCount() == 0) {
-            return json_encode(false);
+            return json_encode(['Response' => false]);
         }
 
         $this->disconnect();
 
-        return json_encode(true);
+        return json_encode(['Response' => true]);
     }
 
     /**
@@ -191,7 +191,7 @@ class Album extends DB {
         $stmt->execute([$id]);
 
         if ($stmt->fetch()['Total'] > 0) {
-            return json_encode(false);
+            return json_encode(['Response' => false]);
         }
 
         //Delete the album
@@ -204,7 +204,7 @@ class Album extends DB {
 
         $this->disconnect();
 
-        return json_encode(true);
+        return json_encode(['Response' => true]);
     }
 
 

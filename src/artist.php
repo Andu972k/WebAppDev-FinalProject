@@ -74,7 +74,7 @@ class Artist extends DB {
 
         $query = <<<'SQL'
             SELECT * FROM artist
-            ORDER BY Name
+            ORDER BY Name ASC
         SQL;
         
 
@@ -85,7 +85,7 @@ class Artist extends DB {
 
         $this->disconnect();
 
-        return json_encode($results);
+        return json_encode(['Response' => $results]);
     }
 
     /**
@@ -107,7 +107,7 @@ class Artist extends DB {
 
         $this->disconnect();
 
-        return json_encode($result);
+        return json_encode(['Response' => $result]);
     }
 
     /**
@@ -120,7 +120,7 @@ class Artist extends DB {
         $query = <<<'SQL'
             SELECT * FROM artist
             WHERE Name like ?
-            ORDER BY Name
+            ORDER BY Name ASC
         SQL;
 
         $stmt = $this->pdo->prepare($query);
@@ -130,7 +130,7 @@ class Artist extends DB {
 
         $this->disconnect();
 
-        return json_encode($results);
+        return json_encode(['Response' => $results]);
     }
 
     /**
@@ -150,7 +150,7 @@ class Artist extends DB {
         $stmt->execute([$name]);
 
         if ($stmt->fetch()['Total'] > 0) {
-            return json_encode(-1);
+            return json_encode(['Response' => -1]);
         }
 
         //Insert artist
@@ -164,7 +164,7 @@ class Artist extends DB {
         $newId = $this->pdo->lastInsertId();
         $this->disconnect();
 
-        return json_encode($newId);
+        return json_encode(['Response' => $newId]);
     }
 
     /**
@@ -184,12 +184,12 @@ class Artist extends DB {
         $stmt->execute([$newName, $id]);
 
         if ($stmt->rowCount() == 0) {
-            return json_encode(false);
+            return json_encode(['Response' => false]);
         }
 
         $this->disconnect();
 
-        return json_encode(true);
+        return json_encode(['Response' => true]);
     }
 
     /**
@@ -209,7 +209,7 @@ class Artist extends DB {
         $stmt->execute([$id]);
 
         if ($stmt->fetch()['Total'] > 0) {
-            return json_encode(false);
+            return json_encode(['Response' => false]);
         }
 
         //Delete the artist
@@ -222,7 +222,7 @@ class Artist extends DB {
 
         $this->disconnect();
 
-        return json_encode(true);
+        return json_encode(['Response' => true]);
     }
 
 }
