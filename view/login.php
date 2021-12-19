@@ -6,7 +6,14 @@
     $customerValidation = false;
     //If set then the customer is logged out
     if (isset($_POST['logout'])) {
-        session_destroy();
+        if (ini_get('session.use_cookies')) {
+            $params = session_get_cookie_params();
+            setcookie(session_name(), '', time() - 86400, 
+                $params['path'], $params['domain'],
+                $params['secure'], $params['httponly']);
+
+            session_destroy();
+        }
     }
     else if (isset($_SESSION['customerID'])) {
         header('Location: ../index.php');
@@ -56,7 +63,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <script src="https://code.jquery.com/jquery-3.6.0.js" defer></script>
-    <script src="../js/script.js" defer></script>
     <link rel="stylesheet" href="../css/login.css">
 </head>
 <body>
@@ -98,11 +104,8 @@
     <?php
     unset($admin);
 
+    include_once('../footer.html');
     ?>
-
-    <footer>
-        &copy; Anders Genderskov Binder
-    </footer>
     
 </body>
 </html>
