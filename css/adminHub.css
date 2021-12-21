@@ -1,0 +1,40 @@
+
+
+section > main > div {
+    display: flex;
+    flex-flow: column;
+    width: 100%;
+}
+
+section > main > div > div{
+    flex-basis: 25%;
+    flex-grow: 1;
+    flex-shrink: 1;
+}
+
+section > main > div > article.artistObject {
+    border-style: solid;
+    background-color: var(--secondaryColor);
+    color: var(--secondaryTextColor);
+    border-color: var(--extraColor);
+
+    margin-bottom: 3px;
+}
+
+
+
+section > main > div > article.artistObject:hover {
+    background-color: var(--hoverElement);
+}
+
+
+
+button.delete {
+    color: var(--secondaryTextColor);
+    float: right;
+}
+
+button.delete:hover {
+    background-color: var(--hoverDeleteButton);
+}
+

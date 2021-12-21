@@ -63,6 +63,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <script src="https://code.jquery.com/jquery-3.6.0.js" defer></script>
+    <link rel="stylesheet preload" as="style" href="../css/Variables.css" crossorigin="anonymous" type="text/css">
+    <link rel="stylesheet" href="../css/general.css">
     <link rel="stylesheet" href="../css/login.css">
 </head>
 <body>

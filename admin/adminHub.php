@@ -19,6 +19,9 @@ if (!isset($_SESSION['userRole'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://code.jquery.com/jquery-3.6.0.js" defer></script>
     <script src="../js/adminHub.js" defer></script>
+    <link rel="stylesheet preload" as="style" href="../css/Variables.css" crossorigin="anonymous" type="text/css">
+    <link rel="stylesheet" href="../css/general.css">
+    <link rel="stylesheet" href="../css/adminHub.css">
     <title>Music Admin</title>
 </head>
 <body>
@@ -29,7 +32,7 @@ if (!isset($_SESSION['userRole'])) {
     </div>
     <div>
         <div>
-            <input id="btnArtists" type="button" value="Artists">
+            <input id="btnArtists" class="hidden" type="button" value="Artists">
         </div>
         <div>
             <input id="btnAlbums" type="button" value="Albums">
@@ -48,7 +51,25 @@ if (!isset($_SESSION['userRole'])) {
 
 <main>
     <section>
+        <header>
+            <h2 id="displayedEntity">Artists</h2>
+            <input type="hidden" value="artist">
+            <div>
+                <input id="btnOpenArtistCreation" type="button" value="Create artist">
+                <input id="btnOpenAlbumCreation" class="hidden" type="button" value="Create album">
+                <input id="btnOpenTrackCreation" class="hidden" type="button" value="Create track">
+                <form id="formSearch">
+                    <input id="searchText" type="text" placeholder="Enter searchtext">
+                    <input type="submit" value="Search">
+                </form>
+            </div>
+        </header>
+        <main id="mainOutput">
 
+        </main>
+        <div id="modal" class="modal">
+
+        </div>
     </section>
 </main>
 

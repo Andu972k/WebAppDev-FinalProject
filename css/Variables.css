@@ -1,0 +1,11 @@
+
+:root {
+    --primaryColor: black;
+    --secondaryColor: floralwhite;
+    --extraColor: green;
+    --primaryTextColor: floralwhite;
+    --secondaryTextColor: black; 
+    --modalObscuredBackground: rgba(0,0,0,0.4);
+    --hoverDeleteButton: red;
+    --hoverElement: grey;
+}

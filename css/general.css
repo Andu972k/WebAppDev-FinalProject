@@ -1,0 +1,60 @@
+* {
+    color: var(--primaryTextColor);
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    font-size: 100%;
+}
+
+header {
+    text-align: center;
+}
+
+body {
+    background-color: var(--primaryColor);
+}
+
+input {
+    color: var(--secondaryTextColor);
+}
+
+
+
+.hidden {
+    display: none;
+}
+
+/*Modal css*/
+
+div.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    top: 0;
+    left: 0;
+    background-color: var(--modalObscuredBackground);
+    color: var(--secondaryTextColor);
+}
+
+div.modalContent {
+    width: 80%;
+    background-color: var(--secondaryColor);
+    margin: auto;
+}
+
+div.modalContent * {
+    color: var(--secondaryTextColor);
+}
+
+span.closeModal {
+    float: right;
+}
+
+span.closeModal:hover {
+    cursor: pointer;
+}

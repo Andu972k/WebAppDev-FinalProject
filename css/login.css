@@ -4,23 +4,6 @@
     --colorTextSecondary: floralwhite;
 }
 
-* {
-    margin: 0;
-    padding: 0;
-}
-
-html {
-    font-size: 100%;
-}
-
-header {
-    text-align: center;
-}
-
-.hidden {
-    display: none;
-}
-
 form div {
     display: flex;
     flex-direction: column;
