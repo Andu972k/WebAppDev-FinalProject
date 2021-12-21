@@ -72,7 +72,7 @@ else {
             require_once('album.php');
             $album = new Album();
 
-            $verb = $_SERVER['Request_METHOD'];
+            $verb = $_SERVER['REQUEST_METHOD'];
 
             switch ($verb) {
                 case 'GET':
@@ -106,7 +106,7 @@ else {
 
             $track = new Track();
 
-            $verb = $_SERVER['Request_METHOD'];
+            $verb = $_SERVER['REQUEST_METHOD'];
 
             switch ($verb) {
                 case 'GET':
