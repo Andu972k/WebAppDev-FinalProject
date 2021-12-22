@@ -48,7 +48,17 @@
 
                 $_SESSION['customerID'] = $customer->customerID;
                 $_SESSION['userRole'] = 'customer';
-
+                $_SESSION['email'] = $customer->email;
+                $_SESSION['firstName'] = $customer->firstName;
+                $_SESSION['lastName'] = $customer->lastName;
+                $_SESSION['company'] = $customer->company;
+                $_SESSION['address'] = $customer->address;
+                $_SESSION['city'] = $customer->city;
+                $_SESSION['state'] = $customer->state;
+                $_SESSION['country'] = $customer->country;
+                $_SESSION['postalCode'] = $customer->postalCode;
+                $_SESSION['phone'] = $customer->phone;
+                $_SESSION['fax'] = $customer->fax;
                 header('Location: ../index.php');
             }
         }

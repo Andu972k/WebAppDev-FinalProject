@@ -66,28 +66,28 @@ $showForm = true;
                 <input type="password" id="txtPassword" name="Password" required>
                 <br>
                 <label for="txtCompany">Company</label>
-                <input type="text" id="txtCompany" name="Company" required>
+                <input type="text" id="txtCompany" name="Company">
                 <br>
                 <label for="txtAddress">Address</label>
-                <input type="text" id="txtAddress" name="Address" required>
+                <input type="text" id="txtAddress" name="Address">
                 <br>
                 <label for="txtCity">City</label>
-                <input type="text" id="txtCity" name="City" required>
+                <input type="text" id="txtCity" name="City">
                 <br>
                 <label for="txtState">State</label>
-                <input type="text" id="txtState" name="State" required>
+                <input type="text" id="txtState" name="State">
                 <br>
                 <label for="txtCountry">Country</label>
-                <input type="text" id="txtCountry" name="Country" required>
+                <input type="text" id="txtCountry" name="Country">
                 <br>
                 <label for="txtPostalCode">PostalCode</label>
-                <input type="text" id="txtPostalCode" name="PostalCode" required>
+                <input type="text" id="txtPostalCode" name="PostalCode">
                 <br>
                 <label for="txtPhone">Phone</label>
-                <input type="text" id="txtPhone" name="Phone" required>
+                <input type="text" id="txtPhone" name="Phone">
                 <br>
                 <label for="txtFax">Fax</label>
-                <input type="text" id="txtFax" name="Fax" required>
+                <input type="text" id="txtFax" name="Fax">
                 <br>
                 <input type="submit" id="btnSignUp" value="Sign Up">
                 <input type="button" id="btnSignUpCancel" value="Cancel">

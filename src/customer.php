@@ -6,6 +6,7 @@ require_once('connection.php');
         public int $customerID;
         public string $firstName;
         public string $lastName;
+        public string $password;
         public string $company;
         public string $address;
         public string $city;
@@ -75,7 +76,7 @@ require_once('connection.php');
                     $query .= ', Password = ?';
                 }
                 else {
-                    return false;
+                    return json_encode(['Response' => false]);
                 }
             }
             $query .= ' WHERE Email = ?;';
@@ -90,7 +91,7 @@ require_once('connection.php');
 
             $this->disconnect();
 
-            return true;
+            return json_encode(['Response' => true]);
         }
 
 
@@ -116,6 +117,7 @@ require_once('connection.php');
             $this->customerID = $row['CustomerId'];
             $this->firstName = $row['FirstName'];
             $this->lastName = $row['LastName'];
+            $this->password = $row['Password'];
             $this->company = $row['Company'] ?? '';
             $this->address = $row['Address'] ?? '';
             $this->city = $row['City'] ?? '';
