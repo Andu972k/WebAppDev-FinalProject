@@ -1,0 +1,19 @@
+
+main {
+    background-color: var(--secondaryColor);
+
+}
+
+form * {
+    color: var(--secondaryTextColor);
+}
+
+div {
+    background-color: var(--secondaryColor);
+    color: var(--secondaryTextColor);
+}
+
+div * {
+    color: var(--secondaryTextColor);
+}
+

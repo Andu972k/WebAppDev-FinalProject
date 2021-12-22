@@ -32,7 +32,7 @@ if (!isset($_SESSION['userRole'])) {
     </div>
     <div>
         <div>
-            <input id="btnArtists" class="hidden" type="button" value="Artists">
+            <input id="btnArtists" type="button" value="Artists" disabled>
         </div>
         <div>
             <input id="btnAlbums" type="button" value="Albums">
@@ -52,8 +52,8 @@ if (!isset($_SESSION['userRole'])) {
 <main>
     <section>
         <header>
-            <h2 id="displayedEntity">Artists</h2>
-            <input type="hidden" value="artist">
+            <h2 id="displayedEntity"></h2>
+            <input type="hidden" value="">
             <div>
                 <input id="btnOpenArtistCreation" type="button" value="Create artist">
                 <input id="btnOpenAlbumCreation" class="hidden" type="button" value="Create album">

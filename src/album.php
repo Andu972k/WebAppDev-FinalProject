@@ -144,11 +144,11 @@ class Album extends DB {
         //Check if album exists
         $query = <<<'SQL'
             SELECT COUNT(*) as Total FROM album
-            WHERE Title = ?
+            WHERE Title = ? AND NOT AlbumId = ?
         SQL;
 
         $stmt = $this->pdo->prepare($query);
-        $stmt->execute([$newTitle]);
+        $stmt->execute([$newTitle, $id]);
 
         if ($stmt->fetch()['Total'] > 0) {
             return json_encode(['Response' => false]);

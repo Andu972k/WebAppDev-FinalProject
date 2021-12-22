@@ -1,5 +1,5 @@
 <?php
-
+require_once('connection.php');
 
     class Customer extends DB {
 
@@ -101,7 +101,7 @@
         function validate($email, $password){
             //Get customer data
             $query = <<<'SQL'
-                SELECT FirstName, LastName, Password, Company, Address, City, State, Country, PostalCode, Phone, Fax FROM customer WHERE Email = ?;
+                SELECT CustomerId, FirstName, LastName, Password, Company, Address, City, State, Country, PostalCode, Phone, Fax FROM customer WHERE Email = ?;
             SQL;
 
             $stmt = $this->pdo->prepare($query);
@@ -113,16 +113,17 @@
 
             $row = $stmt->fetch();
 
+            $this->customerID = $row['CustomerId'];
             $this->firstName = $row['FirstName'];
             $this->lastName = $row['LastName'];
-            $this->company = $row['Company'];
-            $this->address = $row['Address'];
-            $this->city = $row['City'];
-            $this->state = $row['State'];
-            $this->country = $row['Country'];
-            $this->postalCode = $row['PostalCode'];
-            $this->phone = $row['Phone'];
-            $this->fax = $row['Fax'];
+            $this->company = $row['Company'] ?? '';
+            $this->address = $row['Address'] ?? '';
+            $this->city = $row['City'] ?? '';
+            $this->state = $row['State'] ?? '';
+            $this->country = $row['Country'] ?? '';
+            $this->postalCode = $row['PostalCode'] ?? '';
+            $this->phone = $row['Phone'] ?? '';
+            $this->fax = $row['Fax'] ?? '';
             $this->email = $email;
 
             //Check password

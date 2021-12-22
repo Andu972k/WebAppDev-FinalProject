@@ -9,6 +9,7 @@ define('Max_PIECES', 3);
 define('ENTITY_ARTISTS', 'artists');
 define('ENTITY_ALBUMS', 'albums');
 define('ENTITY_TRACKS', 'tracks');
+define('ENTITY_CUSTOMERS', 'customers');
 
 $url = strtok($_SERVER['REQUEST_URI'], '?');
 
@@ -125,13 +126,34 @@ else {
                     break;
                 case 'PUT':
                     $trackData = (array) json_decode(file_get_contents('php://input'), true);
-                    echo $track->update($trackData);
+                    echo $track->update($urlPieces[POS_ID], $trackData);
                     break;
                 case 'DELETE':
                     echo $track->delete($urlPieces[POS_ID]);
                     break;
                 default:
                     echo 'Unknown/Unsupported method';
+                    break;
+            }
+            break;
+        case ENTITY_CUSTOMERS:
+            require_once('customer.php');
+
+            $customer = new Customer();
+
+            $verb = $_SERVER['REQUEST_METHOD'];
+
+            switch ($verb) {
+                case 'POST':
+                    echo $customer->create($_POST['FirstName'],$_POST['LastName'], $_POST['Password'], $_POST['Company'], $_POST['Address'], $_POST['City'], $_POST['State'], $_POST['Country'], $_POST['PostalCode'], $_POST['Phone'], $_POST['Fax'], $_POST['Email']);
+                    break;
+                case 'PUT':
+                    $customerData = (array) json_decode(file_get_contents('php://input'), true);
+                    echo $customer->update($customerData['FirstName'], $customerData['LastName'], $customerData['Password'], $customerData['NewPassword'], $customerData['Company'], $customerData['Address'], $customerData['City'], $customerData['State'], $customerData['Country'], $customerData['PostalCode'], $customerData['Phone'], $customerData['Fax'], $customerData['Email']);
+                    break;
+                
+                default:
+                    echo 'Unsupported method';
                     break;
             }
             break;

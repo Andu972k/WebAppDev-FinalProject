@@ -5,11 +5,7 @@ session_start();
 if (!isset($_SESSION['userRole']) || !isset($_SESSION['customerID'])) {
     header('Location: view/login.php');
 }
-else {
-    echo '<script>alert(<?php ' .$_SESSION['customerID'] . '?></script>)';
-    echo '<h1>Logged in</h1>';
-    echo $_SESSION['customerID'];
-}
+
 
 
 ?>

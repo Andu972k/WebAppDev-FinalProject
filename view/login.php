@@ -1,6 +1,6 @@
 <?php
     require_once('../src/functions.php');
-
+    
     session_start();
 
     $customerValidation = false;
@@ -47,6 +47,7 @@
                 session_start();
 
                 $_SESSION['customerID'] = $customer->customerID;
+                $_SESSION['userRole'] = 'customer';
 
                 header('Location: ../index.php');
             }
@@ -99,13 +100,16 @@
                         <input type="submit" id="btnLogin" value="Login">
                     </fieldset>
                 </form>
+                <div id="signup">
+                    If you do not have a user, you can <a href="signup.php">sign up</a>
+                </div>
             </div>
         </section>
     </main>
 
     <?php
     unset($admin);
-
+    unset($customer);
     include_once('../footer.html');
     ?>
     

@@ -95,7 +95,7 @@ class Track extends DB {
         //Ensure album exists
         $query = <<<'SQL'
             SELECT COUNT(*) as Total FROM album
-            WHERE Title = ?
+            WHERE AlbumId = ?
         SQL;
 
         $stmt = $this->pdo->prepare($query);
@@ -150,7 +150,7 @@ class Track extends DB {
      * @param   object containing updated information about a track
      * @return  true if the update was successful, false if new artist doesn't exist or another album already has the same name
      */
-    function update($updatedTrack){
+    function update($id, $updatedTrack){
 
         //Check if another track has the updated track's name exists
         $query = <<<'SQL'
@@ -159,7 +159,7 @@ class Track extends DB {
         SQL;
 
         $stmt = $this->pdo->prepare($query);
-        $stmt->execute([$updatedTrack['Name'], $updatedTrack['TrackId']]);
+        $stmt->execute([$updatedTrack['Name'], $id]);
 
         if ($stmt->fetch()['Total'] > 0) {
             return json_encode(['Response' => false]);
@@ -169,7 +169,7 @@ class Track extends DB {
         //Ensure album exists
         $query = <<<'SQL'
             SELECT COUNT(*) as Total FROM album
-            WHERE Title = ?
+            WHERE AlbumId = ?
         SQL;
 
         $stmt = $this->pdo->prepare($query);
@@ -207,7 +207,7 @@ class Track extends DB {
 
         //Update album
         $query = <<<'SQL'
-            UPDATE album
+            UPDATE track
             SET Name = ?,
                 AlbumId = ?,
                 MediaTypeId = ?,
@@ -220,7 +220,7 @@ class Track extends DB {
         SQL;
 
         $stmt = $this->pdo->prepare($query);
-        $stmt->execute($updatedTrack['Name'], [$updatedTrack['AlbumId'], $updatedTrack['MediaTypeId'], $updatedTrack['GenreId'], $updatedTrack['Composer'], $updatedTrack['Milliseconds'], $updatedTrack['Bytes'], $updatedTrack['UnitPrice'], $updatedTrack['TrackId']]);
+        $stmt->execute([$updatedTrack['Name'], $updatedTrack['AlbumId'], $updatedTrack['MediaTypeId'], $updatedTrack['GenreId'], $updatedTrack['Composer'], $updatedTrack['Milliseconds'], $updatedTrack['Bytes'], $updatedTrack['UnitPrice'], $id]);
         
         if ($stmt->rowCount() == 0) {
             return json_encode(['Response' => false]);

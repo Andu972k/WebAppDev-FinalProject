@@ -174,6 +174,19 @@ class Artist extends DB {
      * @return true if the update was successful, false if update was unsuccessful
      */
     function update($id, $newName){
+        //Ensure new name is not taken
+        $query = <<<'SQL'
+            SELECT COUNT(*) as Total FROM artist
+            WHERE Name = ? AND NOT ArtistId = ?
+        SQL;
+
+        $stmt = $this->pdo->prepare($query);
+        $stmt->execute([$newName, $id]);
+
+        if ($stmt->fetch()['Total'] > 0) {
+            return json_encode(['Response' => false]);
+        }
+
         $query = <<<'SQL'
             UPDATE artist
             SET Name = ?
