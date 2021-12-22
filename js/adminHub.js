@@ -67,7 +67,7 @@ function ChangeEntityElements() {
             btnArtistCreation.show();
             btnDisplayAlbums.prop('disabled', false);
             btnAlbumCreation.hide();
-            btnDisplayTracks.prop('disabled', false)
+            btnDisplayTracks.prop('disabled', false);
             btnTrackCreation.hide();
             break;
         case 'album':
@@ -75,7 +75,7 @@ function ChangeEntityElements() {
             btnArtistCreation.hide();
             btnDisplayAlbums.prop('disabled', true);
             btnAlbumCreation.show();
-            btnDisplayTracks.prop('disabled', false)
+            btnDisplayTracks.prop('disabled', false);
             btnTrackCreation.hide();
             break;
         case 'track':
@@ -83,7 +83,7 @@ function ChangeEntityElements() {
             btnArtistCreation.hide();
             btnDisplayAlbums.prop('disabled', false);
             btnAlbumCreation.hide();
-            btnDisplayTracks.prop('disabled', true)
+            btnDisplayTracks.prop('disabled', true);
             btnTrackCreation.show();
             break;
         default:

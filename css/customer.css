@@ -1,0 +1,59 @@
+
+
+section > main > div {
+    display: flex;
+    flex-flow: column;
+    width: 100%;
+}
+
+section > main > div > div{
+    flex-basis: 25%;
+    flex-grow: 1;
+    flex-shrink: 1;
+}
+
+
+
+section > main > div > article.artistObject {
+    border-style: solid;
+    background-color: var(--secondaryColor);
+    color: var(--secondaryTextColor);
+    border-color: var(--extraColor);
+
+    margin-bottom: 3px;
+}
+
+section > main > div > article.artistObject:hover {
+    background-color: var(--hoverElement);
+}
+
+
+section > main > div > article.albumObject {
+    border-style: solid;
+    background-color: var(--secondaryColor);
+    color: var(--secondaryTextColor);
+    border-color: var(--extraColor);
+
+    margin-bottom: 3px;
+}
+
+section > main > div > article.albumObject:hover {
+    background-color: var(--hoverElement);
+}
+
+section > main > div > article.trackObject {
+    border-style: solid;
+    background-color: var(--secondaryColor);
+    color: var(--secondaryTextColor);
+    border-color: var(--extraColor);
+
+    margin-bottom: 3px;
+}
+
+section > main > div > article.trackObject:hover {
+    background-color: var(--hoverElement);
+}
+
+select {
+    color: var(--secondaryTextColor);
+}

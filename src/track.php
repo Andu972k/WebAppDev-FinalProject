@@ -12,7 +12,10 @@ class Track extends DB {
     function getAll(){
 
         $query = <<<'SQL'
-            SELECT * FROM track
+            SELECT track.*, album.Title, mediatype.Name as MediaType, genre.Name as Genre FROM track
+            INNER JOIN album ON album.AlbumId = track.AlbumId
+            INNER JOIN mediatype ON mediatype.MediaTypeId = track.MediaTypeId
+            INNER JOIN genre ON genre.GenreId = track.GenreId
             ORDER BY AlbumId, Name
         SQL;
         
@@ -35,7 +38,10 @@ class Track extends DB {
     function getOne($id){
 
         $query = <<<'SQL'
-            SELECT * FROM track
+            SELECT track.*, album.Title, mediatype.Name as MediaType, genre.Name as Genre FROM track
+            INNER JOIN album ON album.AlbumId = track.AlbumId
+            INNER JOIN mediatype ON mediatype.MediaTypeId = track.MediaTypeId
+            INNER JOIN genre ON genre.GenreId = track.GenreId
             WHERE TrackId = ?
         SQL;
 
@@ -50,20 +56,41 @@ class Track extends DB {
     }
 
     /**
-     * Retrieves tracks based on title
+     * Retrieves tracks based on track name
      * 
      * @param   text upon which the search is executed
      * @return  a json array with matching tracks
      */
-    function search($searchText){
+    function search($searchText = null, $genre = null, $mediaType = null){
+        $executionParams = array();
         $query = <<<'SQL'
-            SELECT * FROM track
-            WHERE Name like ?
-            ORDER BY AlbumId, Name
+            SELECT track.*, album.Title, mediatype.Name as MediaType, genre.Name as Genre FROM track
+            INNER JOIN album ON album.AlbumId = track.AlbumId
+            INNER JOIN mediatype ON mediatype.MediaTypeId = track.MediaTypeId
+            INNER JOIN genre ON genre.GenreId = track.GenreId
+            WHERE 
         SQL;
 
+        if ($searchText !== null) {
+            $query .= 'track.Name LIKE ? AND ';
+            $searchText = '%' . $searchText . '%';
+            array_push($executionParams, $searchText);
+        }
+        if ($genre !== null) {
+            $query .= 'genre.GenreId = ? AND ';
+            array_push($executionParams, $genre);
+        }
+        if ($mediaType !== null) {
+            $query .= 'mediatype.MediaTypeId = ? AND ';
+            array_push($executionParams, $mediaType);
+        }
+
+        $query = substr($query, 0, strlen($query) - 5);
+
+        $query .= ' ORDER BY AlbumId, Name';
+
         $stmt = $this->pdo->prepare($query);
-        $stmt->execute(['%' . $searchText . '%']);
+        $stmt->execute($executionParams);
 
         $results = $stmt->fetchAll();
 
@@ -71,6 +98,8 @@ class Track extends DB {
 
         return json_encode(['Response' => $results]);
     }
+
+    
 
     /**
      * Creates a new track

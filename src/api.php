@@ -111,8 +111,11 @@ else {
 
             switch ($verb) {
                 case 'GET':
-                    if (isset($_GET['search-text'])) {
-                        echo $track->search($_GET['search-text']);
+                    if (isset($_GET['search-text']) || isset($_GET['genre']) || isset($_GET['media-type'])) {
+                        $searchText = (isset($_GET['search-text']))? $_GET['search-text'] : null;
+                        $genre = (isset($_GET['genre']))? $_GET['genre'] : null;
+                        $mediaType = (isset($_GET['media-type']))? $_GET['media-type'] : null;
+                        echo $track->search($searchText, $genre, $mediaType);
                     }
                     else if (isset($urlPieces[POS_ID])) {
                         echo $track->getOne($urlPieces[POS_ID]);

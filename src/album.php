@@ -12,7 +12,8 @@ class Album extends DB {
     function getAll(){
 
         $query = <<<'SQL'
-            SELECT * FROM album
+            SELECT album.*, artist.Name FROM album
+            INNER JOIN artist on artist.ArtistId = album.ArtistId
             ORDER BY ArtistId ASC, Title ASC
         SQL;
         
@@ -57,7 +58,8 @@ class Album extends DB {
      */
     function search($searchText){
         $query = <<<'SQL'
-            SELECT * FROM album
+            SELECT album.*, artist.Name FROM album
+            INNER JOIN artist on artist.ArtistId = album.ArtistId
             WHERE Title like ?
             ORDER BY ArtistId ASC, Title ASC
         SQL;
