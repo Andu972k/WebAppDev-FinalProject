@@ -2,7 +2,10 @@
 
 require_once('../src/functions.php');
 
+session_set_cookie_params(0, '/', $_SERVER['SERVER_NAME'], true, true);
 session_start();
+
+require_once('../security/csrf_token_functions.php');
 
 if (!isset($_SESSION['userRole'])) {
     header('Location: ../login.php');

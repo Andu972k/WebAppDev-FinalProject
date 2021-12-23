@@ -1,6 +1,13 @@
 <?php
 
+session_set_cookie_params(0, '/', $_SERVER['SERVER_NAME'], true, true);
+session_start();
+
+require_once('../security/csrf_token_functions.php');
+
 $showForm = true;
+
+die_on_csrf_token_failure();
 
     // New user
     if (isset($_POST['FirstName'])) {
@@ -89,6 +96,7 @@ $showForm = true;
                 <label for="txtFax">Fax</label>
                 <input type="text" id="txtFax" name="Fax">
                 <br>
+                <?php echo csrf_token_tag() ?>
                 <input type="submit" id="btnSignUp" value="Sign Up">
                 <input type="button" id="btnSignUpCancel" value="Cancel">
             </fieldset>

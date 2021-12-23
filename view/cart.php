@@ -1,5 +1,8 @@
 <?php
+session_set_cookie_params(0, '/', $_SERVER['SERVER_NAME'], true, true);
 session_start();
+
+require_once('../security/csrf_token_functions.php');
 
 if (!isset($_SESSION['customerID'])) {
     header('Location: login.php');
@@ -117,6 +120,7 @@ $cart .= '</table>';
                         <input name="BillingPostalCode" id="inputBillingPostalCode" type="text" value="<?php echo $_SESSION['postalCode'] ?>"><br>
                         <label for="inputTotalPrice">TotalPrice</label>
                         <input name="Total" id="inputTotalPrice" type="text" value="<?php echo $TotalPrice ?>" disabled><br>
+                        <?php echo csrf_token_tag() ?>
                         <input id="inputConfirmPurchase" type="submit" value="Purchase">
                     </form>
                     <form class="hidden" action="cart.php" method="post">

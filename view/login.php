@@ -1,7 +1,10 @@
 <?php
     require_once('../src/functions.php');
     
+    session_set_cookie_params(0, '/', $_SERVER['SERVER_NAME'], true, true);
     session_start();
+
+    require_once('../security/csrf_token_functions.php');
 
     $customerValidation = false;
     //If set then the customer is logged out
@@ -11,7 +14,7 @@
             setcookie(session_name(), '', time() - 86400, 
                 $params['path'], $params['domain'],
                 $params['secure'], $params['httponly']);
-
+            session_unset();
             session_destroy();
         }
     }
@@ -22,6 +25,7 @@
         header('Location: ../admin/adminHub.php');
     }
     else if (isset($_POST['email'])) {
+        
         $customerValidation = true;
 
         $email = $_POST['email'];
@@ -32,8 +36,9 @@
             $admin = new admin();
             $validAdmin = $admin->validate($password);
             if ($validAdmin) {
+                session_set_cookie_params(0, '/', $_SERVER['SERVER_NAME'], true, true);
                 session_start();
-
+                session_regenerate_id();
                 $_SESSION['userRole'] = $admin->userName;
 
                 header('Location: ../admin/adminHub.php');
@@ -44,8 +49,10 @@
             $customer = new Customer();
             $validCustomer = $customer->validate($email, $password);
             if ($validCustomer) {
+                session_set_cookie_params(0, '/', $_SERVER['SERVER_NAME'], true, true);
                 session_start();
-
+                session_regenerate_id();
+                
                 $_SESSION['customerID'] = $customer->customerID;
                 $_SESSION['userRole'] = 'customer';
                 $_SESSION['email'] = $customer->email;
@@ -99,6 +106,7 @@
                 <form id="signinForm" action="login.php" method="POST">
                     <fieldset>
                         <legend>Login</legend>
+                        <?php echo csrf_token_tag() ?>
                         <div>
                             <label for="email">Email</label>
                             <input type="text" name="email" required>

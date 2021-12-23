@@ -237,6 +237,7 @@ $(document).on('click', 'input#btnOpenArtistCreation', function () {
                                     <form id="formCreateArtist" name="formCreateArtist" method="POST">
                                         <label for="Name">Name</label>
                                         <textarea name="Name" id="Name" cols="30" rows="2"></textarea>
+                                        <?php echo csrf_token_tag() ?>
                                         <input type="submit" value="Create">
                                     </form>
                                 </main>
@@ -464,6 +465,7 @@ $(document).on('click', 'input#btnOpenAlbumCreation', function () {
                                         <textarea name="Title" id="Title" cols="30" rows="2"></textarea>
                                         <label for="ArtistId">Artist id</label>
                                         <input name="ArtistId" type="number"></input>
+                                        <?php echo csrf_token_tag() ?>
                                         <input type="submit" value="Create">
                                     </form>
                                 </main>
@@ -723,6 +725,7 @@ $(document).on('click', 'input#btnOpenTrackCreation', function () {
                                         <input name="Bytes" id="Bytes" type="number"><br>
                                         <label for="UnitPrice">Price</label>
                                         <input name="UnitPrice" id="UnitPrice" type="number">
+                                        <?php echo csrf_token_tag() ?>
                                         <input type="submit" value="Create">
                                     </form>
                                 </main>

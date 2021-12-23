@@ -1,5 +1,10 @@
 <?php 
 
+session_set_cookie_params(0, '/', $_SERVER['SERVER_NAME'], true, true);
+session_start();
+
+require_once('../security/csrf_token_functions.php');
+
 define('POS_ENTITY', 1);
 define('POS_ID', 2);
 
@@ -28,6 +33,19 @@ header('Access-Control-Allow-Methods: *');
 header('Access-Control-Allow-Headers: *');
 
 $pieces = count($urlPieces);
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if ($pieces === Max_PIECES) {
+        $body = (array) json_decode(file_get_contents('php://input'), true);
+        if ($body['csrf_token'] !== $_SESSION['csrf_token']) {
+            die("CSRF token validation failed.");
+        }
+    }
+    else {
+        die_on_csrf_token_failure();
+    }
+    
+}
 
 if ($pieces > Max_PIECES) {
     echo 'Error';
