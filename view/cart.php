@@ -1,8 +1,8 @@
 <?php
 session_start();
 
-if (!isset($_SESSION['userRole']) || !isset($_SESSION['customerID'])) {
-    header('Location: view/login.php');
+if (!isset($_SESSION['customerID'])) {
+    header('Location: login.php');
 }
 
 if (isset($_POST['action'])) {
@@ -23,6 +23,11 @@ if (isset($_POST['action'])) {
             echo 'Unsupported action';
             break;
     }
+}
+
+if (isset($_POST['emptyCart'])) {
+    unset($_SESSION['cart']);
+    header('Location: ../index.php');
 }
 
 $cart = <<<'CART'
@@ -113,6 +118,10 @@ $cart .= '</table>';
                         <label for="inputTotalPrice">TotalPrice</label>
                         <input name="Total" id="inputTotalPrice" type="text" value="<?php echo $TotalPrice ?>" disabled><br>
                         <input id="inputConfirmPurchase" type="submit" value="Purchase">
+                    </form>
+                    <form class="hidden" action="cart.php" method="post">
+                        <input name="emptyCart" type="hidden" value="">
+                        <input id="btnEmptyCart" type="submit" value="Empty">
                     </form>
                 </div>
             </div>

@@ -21,7 +21,7 @@ function closeModal() {
     $('#modal').hide();
 }
 
-$('form#formPurchase').on('submit', function (e) {
+$('form#formPurchase').on('submit', async function (e) {
     e.preventDefault();
     const customerId = $('#inputCustomerId').val();
     const billingAddress = $('#inputBillingAddress').val();
@@ -43,15 +43,20 @@ $('form#formPurchase').on('submit', function (e) {
     
     
 
-    $.ajax({
+    await $.ajax({
         type: "POST",
         url: baseURI + `customers/${customerId}/cart/checkout`,
         data: JSON.stringify({"BillingAddress": billingAddress, "BillingCity": billingCity, "BillingState": billingState, "BillingCountry": billingCountry, "BillingPostalCode": billingPostalCode, "Total": billingTotalPrice, "Cart": cart}),
         dataType: "json",
-        success: function (data) {
+        success: async function (data) {
             console.log(data);
-            console.log(JSON.stringify({"BillingAddress": billingAddress, "BillingCity": billingCity, "BillingState": billingState, "BillingCountry": billingCountry, "BillingPostalCode": billingPostalCode, "Total": billingTotalPrice, "Cart": cart}));
-            console.log(cart)
+            if (data['Response'] > -1) {
+                $(`<div>Purchase succeeded\nYour invoice id is ${data['Response']}\n\nyou will now be redirected to frontpage<div>`).appendTo('.modalContent');
+                await setTimeout(function () {
+                    $('#btnEmptyCart').trigger('click');
+                }, 5000);
+            }
+            
         },
         error: function (data) {
             console.log(data);

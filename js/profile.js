@@ -8,6 +8,7 @@ $(function() {
     });    
 });
 
+//Update user information
 $('form#formEditProfile').on('submit', function (e) {
     e.preventDefault();
     const id = $('#customerId').val();
