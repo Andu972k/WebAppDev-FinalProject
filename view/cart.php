@@ -38,9 +38,9 @@ $cart = <<<'CART'
 CART;
 
 $TotalPrice = 0;
-$cartItems = array();
 
 foreach ($_SESSION['cart'] as &$cartItem) {
+    $cart .= '<tr class="cartItem">';
     $cart .= '<td>'. $cartItem['trackName'] .'</td>';
     $cart .= '<td>'. $cartItem['albumTitle'] .'</td>';
     $cart .= '<td>'. $cartItem['mediaType'] . '</td>';
@@ -49,12 +49,9 @@ foreach ($_SESSION['cart'] as &$cartItem) {
     $cart .= '<td><span id="spanQuantity">'. $cartItem['quantity'] .'</span></td>';
     $cart .= '<td><form action="cart.php" method="post"><input type="hidden" name="action" value="add"><input type="hidden" name="trackId" value="'. $cartItem['trackId'] .'"><input type="submit" value="+"></form><form action="cart.php" method="post"><input type="hidden" name="action" value="subtract"><input type="hidden" name="trackId" value="'. $cartItem['trackId'] .'"><input type="submit" value="-"></form><form action="cart.php" method="post"><input type="hidden" name="action" value="remove"><input id="inputTrackId" type="hidden" name="trackId" value="'. $cartItem['trackId'] .'"><input type="submit" value="Remove"></form></td></tr>';
     $TotalPrice = $TotalPrice + ($cartItem['price'] * $cartItem['quantity']);
-    array_push($cartItems, ['TrackId' => $cartItem['trackId'], 'UnitPrice' => $cartItem['price'], 'QuanTity' => $cartItem['quantity']]);
 }
 
 $cart .= '</table>';
-
-$cartItems = json_encode($cartItems);
 
 ?>
 
@@ -115,7 +112,6 @@ $cartItems = json_encode($cartItems);
                         <input name="BillingPostalCode" id="inputBillingPostalCode" type="text" value="<?php echo $_SESSION['postalCode'] ?>"><br>
                         <label for="inputTotalPrice">TotalPrice</label>
                         <input name="Total" id="inputTotalPrice" type="text" value="<?php echo $TotalPrice ?>" disabled><br>
-                        <textarea class="hidden" name="Cart[]" cols="30" rows="10"><?php echo $cartItems ?></textarea>
                         <input id="inputConfirmPurchase" type="submit" value="Purchase">
                     </form>
                 </div>

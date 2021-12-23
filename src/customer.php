@@ -162,14 +162,14 @@ require_once('connection.php');
                 $invoiceId = $this->pdo->lastInsertId();
 
                 foreach ($checkoutInformation['Cart'] as &$cartItem) {
-                    foreach ($cartItem as &$item) {
-                        $query = <<<'SQL'
-                            INSERT INTO invoiceline (InvoiceId, TrackId, UnitPrice, Quantity) VALUES (?, ?, ?, ?);
-                        SQL;
+                    
+                    $query = <<<'SQL'
+                        INSERT INTO invoiceline (InvoiceId, TrackId, UnitPrice, Quantity) VALUES (?, ?, ?, ?);
+                    SQL;
                         
-                        $stmt = $this->pdo->prepare($query);
-                        $stmt->execute([$invoiceId, $item['TrackId'], $item['UnitPrice'], $item['Quantity']]);
-                    }
+                    $stmt = $this->pdo->prepare($query);
+                    $stmt->execute([$invoiceId, $cartItem['TrackId'], $cartItem['UnitPrice'], $cartItem['Quantity']]);
+                    
                 }
 
                 $this->pdo->commit();

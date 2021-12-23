@@ -38,3 +38,7 @@ div > header {
 div > header > * {
     color: var(--secondaryTextColor);
 }
+
+tr.cartItem {
+    color: var(--secondaryTextColor);
+}

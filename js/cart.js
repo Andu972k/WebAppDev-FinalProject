@@ -31,27 +31,15 @@ $('form#formPurchase').on('submit', function (e) {
     const billingPostalCode = $('#inputBillingPostalCode').val();
     const billingTotalPrice = $('#inputTotalPrice').val();
     const cart = new Array();
-    const form = $(this)
 
     
-    $('#tableCart').children('tr').each(function () {
+    $('tr.cartItem').each(function () {
         const trackId = $(this).find('#inputTrackId').val();
         const unitPrice = $(this).find('#spanUnitPrice').text();
         const quantity = $(this).find('#spanQuantity').text();
         const cartItem = {"TrackId": trackId, "UnitPrice": unitPrice, "Quantity": quantity};
         cart.push(cartItem);
     });
-    /*
-    let formdata = new FormData();
-    formdata.append('CustomerId', customerId);
-    formdata.append('BillingAddress', billingAddress);
-    formdata.append('BillingCity', billingCity);
-    formdata.append('BillingState', billingState);
-    formdata.append('BillingCountry', billingCountry);
-    formdata.append('BillingPostalCode', billingPostalCode);
-    formdata.append('Total', billingTotalPrice);
-    formdata.append('Cart', JSON.stringify(cart));
-    */
     
     
 
@@ -62,7 +50,8 @@ $('form#formPurchase').on('submit', function (e) {
         dataType: "json",
         success: function (data) {
             console.log(data);
-            console.log(form.serialize());
+            console.log(JSON.stringify({"BillingAddress": billingAddress, "BillingCity": billingCity, "BillingState": billingState, "BillingCountry": billingCountry, "BillingPostalCode": billingPostalCode, "Total": billingTotalPrice, "Cart": cart}));
+            console.log(cart)
         },
         error: function (data) {
             console.log(data);
