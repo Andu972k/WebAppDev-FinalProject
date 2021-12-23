@@ -149,7 +149,8 @@ else {
             switch ($verb) {
                 case 'POST':
                     if (isset($urlPieces[POS_ID]) && count($urlPieces) == 5) {
-                        
+                        $checkoutData = (array) json_decode(file_get_contents('php://input'), true);
+                        echo $customer->checkout($urlPieces[POS_ID], $checkoutData);
                     }
                     else {
                         echo $customer->create($_POST['FirstName'],$_POST['LastName'], $_POST['Password'], $_POST['Company'], $_POST['Address'], $_POST['City'], $_POST['State'], $_POST['Country'], $_POST['PostalCode'], $_POST['Phone'], $_POST['Fax'], $_POST['Email']);

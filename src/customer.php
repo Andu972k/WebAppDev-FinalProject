@@ -132,6 +132,60 @@ require_once('connection.php');
             return (password_verify($password, $row['Password']));
         }
 
+        /**
+         * Checks out a customers cart
+         */
+        function checkout($customerId, $checkoutInformation) {
+            //Ensure Customer exists
+            $query = <<<'SQL'
+                SELECT COUNT(*) as Total FROM customer
+                WHERE CustomerId = ?
+            SQL;
+
+            $stmt = $this->pdo->prepare($query);
+            $stmt->execute([$customerId]);
+
+            if (!$stmt->fetch()['Total'] > 0) {
+                return json_encode(['Response' => -1]);
+            }
+
+            try {
+                $this->pdo->beginTransaction();
+
+                $query = <<<'SQL'
+                    INSERT INTO invoice (CustomerId, InvoiceDate, BillingAddress, BillingCity, BillingState, BillingCountry, BillingPostalCode, Total) VALUES (?, NOW(), ?, ?, ?, ?, ?, ?);
+                SQL;
+
+                $stmt = $this->pdo->prepare($query);
+                $stmt->execute([$customerId, $checkoutInformation['BillingAddress'], $checkoutInformation['BillingCity'], $checkoutInformation['BillingState'], $checkoutInformation['BillingCountry'], $checkoutInformation['BillingPostalCode'], $checkoutInformation['Total']]);
+
+                $invoiceId = $this->pdo->lastInsertId();
+
+                foreach ($checkoutInformation['Cart'] as &$cartItem) {
+                    foreach ($cartItem as &$item) {
+                        $query = <<<'SQL'
+                            INSERT INTO invoiceline (InvoiceId, TrackId, UnitPrice, Quantity) VALUES (?, ?, ?, ?);
+                        SQL;
+                        
+                        $stmt = $this->pdo->prepare($query);
+                        $stmt->execute([$invoiceId, $item['TrackId'], $item['UnitPrice'], $item['Quantity']]);
+                    }
+                }
+
+                $this->pdo->commit();
+
+                $return = json_encode(['Response' => $invoiceId]);
+
+            } catch (Exception $e) {
+                $return = json_encode(['Response' => -1]);
+                $this->pdo->rollBack();
+            }
+
+            $this->disconnect();
+
+            return $return;
+        }
+
 
     }
 
