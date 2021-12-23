@@ -1,0 +1,40 @@
+table {
+    display: flex;
+    background-color: var(--secondaryColor);
+
+}
+
+table * {
+    color: var(--secondaryTextColor);
+}
+
+td, th {
+    
+    border: 1px solid var(--extraColor);
+}
+
+th {
+    flex-shrink: 1;
+}
+
+td {
+    flex-flow: column wrap;
+    flex-shrink: 1;
+    flex-grow: 1;
+    overflow: auto;
+}
+
+td > input {
+    size: 10%;
+    width:100%;
+    margin:-3px;border:2px inset #eee'
+}
+
+div > header {
+    background-color: var(--secondaryColor);
+    
+}
+
+div > header > * {
+    color: var(--secondaryTextColor);
+}

@@ -80,6 +80,11 @@ function ChangeEntityElements() {
     
 }
 
+//Prevent opening of modal when add to cart form is clicked
+$(document).on('click', 'form#formAddToCart', function (e) {
+    e.stopPropagation();
+});
+
 
 //#########################################
 //Artist methods
@@ -233,13 +238,23 @@ async function GetAllTracks() {
                 const {TrackId, Name, Title, MediaType, Genre, UnitPrice} = track;
 
                 $(`<article class="trackObject">
-                        <input type="hidden" value="${TrackId}">
-                        Name: ${Name} <br>
-                        Album: ${Title}<br>
-                        Mediatype: ${MediaType}<br>
-                        Genre: ${Genre}<br>
-                        Price: ${UnitPrice}
-                    </article>`).appendTo(output);
+                                    Name: ${Name} <br>
+                                    Album: ${Title}<br>
+                                    Mediatype: ${MediaType}<br>
+                                    Genre: ${Genre}<br>
+                                    Price: ${UnitPrice} <br>
+                                    <form id="formAddToCart" action="index.php" method="post">
+                                        <input id="inputTrackId" type="hidden" name="trackId" value="${TrackId}">
+                                        <input type="hidden" name="trackName" value="${Name}">
+                                        <input type="hidden" name="albumTitle" value="${Title}">
+                                        <input type="hidden" name="mediaType" value="${MediaType}">
+                                        <input type="hidden" name="genre" value="${Genre}">
+                                        <input type="hidden" name="price" value="${UnitPrice}">
+                                        <input type="number" name="quantity" min="1" required>
+                                        <input type="submit" value="Add to Cart">
+                                    </form>
+                                </article>`).appendTo(output);
+                
             });
         },
         error: function (data) {
@@ -262,7 +277,7 @@ async function TrackSearch(searchText) {
     let url = baseURI + 'tracks?';
     const selectedGenre = await $('select#selectGenre').find(':selected').val();
     const selectedMediaType = await $('select#selectMediaType').find(':selected').val();
-    
+    console.log(searchText);
     if (searchText !== '' || searchText !== null) {
         url+= 'search-text=' + searchText + '&';
     }
@@ -285,13 +300,22 @@ async function TrackSearch(searchText) {
                 const {TrackId, Name, Title, MediaType, Genre, UnitPrice} = track;
 
                 $(`<article class="trackObject">
-                <input type="hidden" value="${TrackId}">
-                Name: ${Name} <br>
-                Album: ${Title}<br>
-                Mediatype: ${MediaType}<br>
-                Genre: ${Genre}<br>
-                Price: ${UnitPrice}
-            </article>`).appendTo(output);
+                        Name: ${Name} <br>
+                        Album: ${Title}<br>
+                        Mediatype: ${MediaType}<br>
+                        Genre: ${Genre}<br>
+                        Price: ${UnitPrice} <br>
+                        <form id="formAddToCart" action="index.php" method="post">
+                            <input id="inputTrackId" type="hidden" name="trackId" value="${TrackId}">
+                            <input type="hidden" name="trackName" value="${Name}">
+                            <input type="hidden" name="albumTitle" value="${Title}">
+                            <input type="hidden" name="mediaType" value="${MediaType}">
+                            <input type="hidden" name="genre" value="${Genre}">
+                            <input type="hidden" name="price" value="${UnitPrice}">
+                            <input type="number" name="quantity" min="1" required>
+                            <input type="submit" value="Add to Cart">
+                        </form>
+                    </article>`).appendTo(output);
             });
         },
         error: function (data) {
@@ -307,7 +331,8 @@ async function TrackSearch(searchText) {
 
 //Display track
 $(document).on('click', 'article.trackObject', function () {
-    const id = $(this).children('input').eq(0).val();
+    const id = $(this).children('form').eq(0).children('input#inputTrackId').val();
+
     const modalContent = $(`<div class="modalContent">
                                 <span class="closeModal">&times;</span>
                                 <header>
@@ -350,7 +375,6 @@ $(document).on('click', 'article.trackObject', function () {
             modalContent.find('#inputMilliseconds').val(Milliseconds);
             modalContent.find('#inputBytes').val(Bytes);
             modalContent.find('#inputUnitPrice').val(UnitPrice);
-            console.log(Title);
         },
         error: function (data) {
             $('<div>An error occured</div>').appendTo(modalContent);

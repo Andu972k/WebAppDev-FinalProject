@@ -20,6 +20,10 @@ input {
     color: var(--secondaryTextColor);
 }
 
+footer {
+    text-align: center;
+}
+
 
 
 .hidden {
@@ -57,4 +61,13 @@ span.closeModal {
 
 span.closeModal:hover {
     cursor: pointer;
+}
+
+button.delete {
+    color: var(--secondaryTextColor);
+    float: right;
+}
+
+button.delete:hover {
+    background-color: var(--hoverDeleteButton);
 }

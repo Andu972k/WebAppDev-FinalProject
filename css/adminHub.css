@@ -54,12 +54,5 @@ section > main > div > article.trackObject:hover {
     background-color: var(--hoverElement);
 }
 
-button.delete {
-    color: var(--secondaryTextColor);
-    float: right;
-}
 
-button.delete:hover {
-    background-color: var(--hoverDeleteButton);
-}
 

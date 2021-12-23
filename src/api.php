@@ -3,7 +3,7 @@
 define('POS_ENTITY', 1);
 define('POS_ID', 2);
 
-define('Max_PIECES', 3);
+define('Max_PIECES', 5);
 
 //Define API entities
 define('ENTITY_ARTISTS', 'artists');
@@ -148,7 +148,12 @@ else {
 
             switch ($verb) {
                 case 'POST':
-                    echo $customer->create($_POST['FirstName'],$_POST['LastName'], $_POST['Password'], $_POST['Company'], $_POST['Address'], $_POST['City'], $_POST['State'], $_POST['Country'], $_POST['PostalCode'], $_POST['Phone'], $_POST['Fax'], $_POST['Email']);
+                    if (isset($urlPieces[POS_ID]) && count($urlPieces) == 5) {
+                        
+                    }
+                    else {
+                        echo $customer->create($_POST['FirstName'],$_POST['LastName'], $_POST['Password'], $_POST['Company'], $_POST['Address'], $_POST['City'], $_POST['State'], $_POST['Country'], $_POST['PostalCode'], $_POST['Phone'], $_POST['Fax'], $_POST['Email']);
+                    }
                     break;
                 case 'PUT':
                     $customerData = (array) json_decode(file_get_contents('php://input'), true);

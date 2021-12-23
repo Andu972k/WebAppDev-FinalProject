@@ -5,7 +5,16 @@ session_start();
 if (!isset($_SESSION['userRole']) || !isset($_SESSION['customerID'])) {
     header('Location: view/login.php');
 }
+if (!isset($_SESSION['cart'])) {
+    $_SESSION['cart'] = array();
+}
 
+
+if (isset($_POST['trackId'])) {
+    $_SESSION['cart'][$_POST['trackId']] = array('trackId' => $_POST['trackId'], 'trackName' => $_POST['trackName'], 'albumTitle' => $_POST['albumTitle'], 'mediaType' => $_POST['mediaType'], 'genre' => $_POST['genre'], 'price' => $_POST['price'], 'quantity' => $_POST['quantity']);
+}
+
+$itemsInCart = count($_SESSION['cart']);
 
 
 ?>
@@ -44,7 +53,10 @@ if (!isset($_SESSION['userRole']) || !isset($_SESSION['customerID'])) {
                 </form>
             </div>
             <div>
-
+                <form action="view/cart.php">
+                    <input type="submit" value="My cart">
+                    <input type="number" name="itemsInCart" value="<?php echo $itemsInCart ?>" disabled>
+                </form>
             </div>
             <div>
                 <form action="view/login.php" method="POST">
